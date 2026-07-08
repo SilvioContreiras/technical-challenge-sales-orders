@@ -12,7 +12,7 @@ export function RootLayout() {
           </span>
           <div className="leading-tight">
             <p className="text-sm font-semibold text-slate-900">OVGS</p>
-            <p className="text-xs text-slate-500">Sales Orders</p>
+            <p className="text-xs text-slate-500">Ordens de Venda</p>
           </div>
         </div>
 
@@ -46,9 +46,11 @@ export function RootLayout() {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6">
-          <h1 className="text-base font-semibold text-slate-900">Sales Order Management System</h1>
+          <h1 className="text-base font-semibold text-slate-900">
+            Sistema de Gestão de Ordens de Venda
+          </h1>
           <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-500">
-            Mocked API
+            API Simulada
           </span>
         </header>
 

@@ -37,40 +37,40 @@ export function SalesOrdersPage() {
   }, [transportTypesQuery.data]);
 
   const columns: Column<SalesOrder>[] = [
-    { header: 'Code', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
-    { header: 'Customer', cell: (o) => customerName(o.customerId) },
-    { header: 'Transport', cell: (o) => transportName(o.transportTypeId) },
-    { header: 'Items', align: 'right', cell: (o) => o.items.length },
+    { header: 'Código', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
+    { header: 'Cliente', cell: (o) => customerName(o.customerId) },
+    { header: 'Transporte', cell: (o) => transportName(o.transportTypeId) },
+    { header: 'Itens', align: 'right', cell: (o) => o.items.length },
     { header: 'Total', align: 'right', cell: (o) => formatCurrency(calculateOrderTotal(o.items)) },
     { header: 'Status', cell: (o) => <StatusBadge status={o.status} /> },
-    { header: 'Created', cell: (o) => formatDate(o.createdAt) },
+    { header: 'Criada em', cell: (o) => formatDate(o.createdAt) },
   ];
 
   return (
     <div>
       <PageHeader
-        title="Sales Orders"
-        description="Create and track the full lifecycle of sales orders."
+        title="Ordens de Venda"
+        description="Crie e acompanhe todo o ciclo de vida das ordens de venda."
         actions={
           <Button onClick={() => navigate({ to: '/sales-orders/new' })}>
             <Plus className="size-4" />
-            New order
+            Nova ordem
           </Button>
         }
       />
 
       <Card>
         {ordersQuery.isPending ? (
-          <LoadingState label="Loading sales orders..." />
+          <LoadingState label="Carregando ordens de venda..." />
         ) : ordersQuery.isError ? (
           <ErrorState message={getErrorMessage(ordersQuery.error)} />
         ) : ordersQuery.data.length === 0 ? (
           <EmptyState
-            message="No sales orders yet."
+            message="Nenhuma ordem de venda ainda."
             action={
               <Button onClick={() => navigate({ to: '/sales-orders/new' })}>
                 <Plus className="size-4" />
-                New order
+                Nova ordem
               </Button>
             }
           />

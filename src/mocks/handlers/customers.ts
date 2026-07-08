@@ -19,7 +19,7 @@ export const customerHandlers = [
 
   http.get(`${base}/:id`, ({ params }) => {
     const customer = db.customers.find((c) => c.id === params.id);
-    if (!customer) return notFound('Customer not found');
+    if (!customer) return notFound('Cliente não encontrado');
     return HttpResponse.json(customer);
   }),
 
@@ -27,7 +27,7 @@ export const customerHandlers = [
     const body = (await request.json()) as CustomerInput;
 
     if (db.customers.some((c) => c.document === body.document)) {
-      return unprocessable('A customer with this document already exists', 'DUPLICATE_DOCUMENT');
+      return unprocessable('Já existe um cliente com este documento', 'DUPLICATE_DOCUMENT');
     }
 
     const timestamp = now();
@@ -47,11 +47,11 @@ export const customerHandlers = [
 
   http.put(`${base}/:id`, async ({ params, request }) => {
     const customer = db.customers.find((c) => c.id === params.id);
-    if (!customer) return notFound('Customer not found');
+    if (!customer) return notFound('Cliente não encontrado');
 
     const body = (await request.json()) as CustomerInput;
     if (db.customers.some((c) => c.document === body.document && c.id !== customer.id)) {
-      return unprocessable('A customer with this document already exists', 'DUPLICATE_DOCUMENT');
+      return unprocessable('Já existe um cliente com este documento', 'DUPLICATE_DOCUMENT');
     }
 
     Object.assign(customer, {

@@ -37,7 +37,7 @@ export function Modal({ open, title, description, onClose, children, footer }: M
             <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
             {description ? <p className="mt-0.5 text-sm text-slate-500">{description}</p> : null}
           </div>
-          <Button variant="ghost" size="sm" onClick={onClose} aria-label="Close">
+          <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar">
             <X className="size-4" />
           </Button>
         </div>

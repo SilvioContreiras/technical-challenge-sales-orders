@@ -13,7 +13,7 @@ export const transportTypeHandlers = [
 
   http.get(`${base}/:id`, ({ params }) => {
     const transportType = db.transportTypes.find((t) => t.id === params.id);
-    if (!transportType) return notFound('Transport type not found');
+    if (!transportType) return notFound('Tipo de transporte não encontrado');
     return HttpResponse.json(transportType);
   }),
 
@@ -22,7 +22,7 @@ export const transportTypeHandlers = [
     const code = body.code.trim().toUpperCase();
 
     if (db.transportTypes.some((t) => t.code === code)) {
-      return unprocessable('A transport type with this code already exists', 'DUPLICATE_CODE');
+      return unprocessable('Já existe um tipo de transporte com este código', 'DUPLICATE_CODE');
     }
 
     const timestamp = now();
@@ -40,12 +40,12 @@ export const transportTypeHandlers = [
 
   http.put(`${base}/:id`, async ({ params, request }) => {
     const transportType = db.transportTypes.find((t) => t.id === params.id);
-    if (!transportType) return notFound('Transport type not found');
+    if (!transportType) return notFound('Tipo de transporte não encontrado');
 
     const body = (await request.json()) as TransportTypeInput;
     const code = body.code.trim().toUpperCase();
     if (db.transportTypes.some((t) => t.code === code && t.id !== transportType.id)) {
-      return unprocessable('A transport type with this code already exists', 'DUPLICATE_CODE');
+      return unprocessable('Já existe um tipo de transporte com este código', 'DUPLICATE_CODE');
     }
 
     Object.assign(transportType, {

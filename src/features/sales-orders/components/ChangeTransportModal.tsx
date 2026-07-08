@@ -42,24 +42,24 @@ export function ChangeTransportModal({
     <Modal
       open={open}
       onClose={onClose}
-      title="Change transport type"
-      description="Only transport types authorized for the customer are listed."
+      title="Alterar tipo de transporte"
+      description="Apenas os tipos de transporte autorizados para o cliente são listados."
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             onClick={handleConfirm}
             loading={updateTransport.isPending}
             disabled={transportTypeId === order.transportTypeId}
           >
-            Change transport
+            Alterar transporte
           </Button>
         </>
       }
     >
-      <Field label="Transport type" htmlFor="transport">
+      <Field label="Tipo de transporte" htmlFor="transport">
         <Select
           id="transport"
           value={transportTypeId}

@@ -26,9 +26,9 @@ import { ChangeTransportModal } from './ChangeTransportModal';
 
 const itemColumns: Column<SalesOrderItem>[] = [
   { header: 'SKU', cell: (i) => i.sku },
-  { header: 'Name', cell: (i) => <span className="font-medium text-slate-900">{i.name}</span> },
-  { header: 'Qty', align: 'right', cell: (i) => i.quantity },
-  { header: 'Unit price', align: 'right', cell: (i) => formatCurrency(i.unitPrice) },
+  { header: 'Nome', cell: (i) => <span className="font-medium text-slate-900">{i.name}</span> },
+  { header: 'Qtd', align: 'right', cell: (i) => i.quantity },
+  { header: 'Preço unitário', align: 'right', cell: (i) => formatCurrency(i.unitPrice) },
   {
     header: 'Subtotal',
     align: 'right',
@@ -46,7 +46,7 @@ export function SalesOrderDetailPage() {
 
   const [transportModalOpen, setTransportModalOpen] = useState(false);
 
-  if (orderQuery.isPending) return <LoadingState label="Loading order..." />;
+  if (orderQuery.isPending) return <LoadingState label="Carregando ordem..." />;
   if (orderQuery.isError) return <ErrorState message={getErrorMessage(orderQuery.error)} />;
 
   const order = orderQuery.data;
@@ -68,12 +68,12 @@ export function SalesOrderDetailPage() {
         className="mb-4 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
       >
         <ArrowLeft className="size-4" />
-        Back to sales orders
+        Voltar para ordens de venda
       </button>
 
       <PageHeader
         title={order.code}
-        description={`Created ${formatDateTime(order.createdAt)}`}
+        description={`Criada em ${formatDateTime(order.createdAt)}`}
         actions={<StatusBadge status={order.status} />}
       />
 
@@ -81,22 +81,20 @@ export function SalesOrderDetailPage() {
         <StatusStepper status={order.status} />
         <div className="mt-4 flex flex-wrap items-center gap-2">
           {nextStatus === null ? (
-            <span className="text-sm font-medium text-emerald-700">
-              This order has been delivered.
-            </span>
+            <span className="text-sm font-medium text-emerald-700">Esta ordem foi entregue.</span>
           ) : nextStatus === 'SCHEDULED' ? (
             <div className="flex items-center gap-3">
               <span className="text-sm text-slate-500">
-                Schedule this order to move it forward.
+                Agende esta ordem para avançar no fluxo.
               </span>
               <Button variant="secondary" onClick={() => navigate({ to: '/scheduling' })}>
                 <CalendarClock className="size-4" />
-                Go to Scheduling
+                Ir para Agendamento
               </Button>
             </div>
           ) : (
             <Button onClick={advanceStatus} loading={updateStatus.isPending}>
-              Advance to {STATUS_LABELS[nextStatus]}
+              Avançar para {STATUS_LABELS[nextStatus]}
               <ArrowRight className="size-4" />
             </Button>
           )}
@@ -105,61 +103,61 @@ export function SalesOrderDetailPage() {
 
       <div className="mb-4 grid gap-4 md:grid-cols-2">
         <Card className="p-5">
-          <h3 className="mb-3 text-sm font-semibold text-slate-900">Order information</h3>
+          <h3 className="mb-3 text-sm font-semibold text-slate-900">Informações da ordem</h3>
           <dl className="flex flex-col gap-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-slate-500">Customer</dt>
+              <dt className="text-slate-500">Cliente</dt>
               <dd className="font-medium text-slate-900">{customer?.name ?? '—'}</dd>
             </div>
             <div className="flex items-center justify-between">
-              <dt className="text-slate-500">Transport</dt>
+              <dt className="text-slate-500">Transporte</dt>
               <dd className="flex items-center gap-2 font-medium text-slate-900">
                 {transportType?.name ?? '—'}
                 {canChangeTransport ? (
                   <Button variant="ghost" size="sm" onClick={() => setTransportModalOpen(true)}>
                     <Truck className="size-4" />
-                    Change
+                    Alterar
                   </Button>
                 ) : null}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-slate-500">Last update</dt>
+              <dt className="text-slate-500">Última atualização</dt>
               <dd className="text-slate-700">{formatDateTime(order.updatedAt)}</dd>
             </div>
           </dl>
         </Card>
 
         <Card className="p-5">
-          <h3 className="mb-3 text-sm font-semibold text-slate-900">Delivery schedule</h3>
+          <h3 className="mb-3 text-sm font-semibold text-slate-900">Agendamento de entrega</h3>
           {order.schedule ? (
             <dl className="flex flex-col gap-2 text-sm">
               <div className="flex justify-between">
-                <dt className="text-slate-500">Date</dt>
+                <dt className="text-slate-500">Data</dt>
                 <dd className="font-medium text-slate-900">
                   {formatDate(order.schedule.deliveryDate)}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-500">Window</dt>
+                <dt className="text-slate-500">Janela</dt>
                 <dd className="text-slate-700">{WINDOW_LABELS[order.schedule.window]}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-500">Confirmed</dt>
+                <dt className="text-slate-500">Confirmado</dt>
                 <dd className={order.schedule.confirmed ? 'text-emerald-700' : 'text-amber-700'}>
-                  {order.schedule.confirmed ? 'Yes' : 'Pending'}
+                  {order.schedule.confirmed ? 'Sim' : 'Pendente'}
                 </dd>
               </div>
             </dl>
           ) : (
-            <p className="text-sm text-slate-500">No schedule defined yet.</p>
+            <p className="text-sm text-slate-500">Nenhum agendamento definido ainda.</p>
           )}
         </Card>
       </div>
 
       <Card>
         <div className="border-b border-slate-100 px-4 py-3">
-          <h3 className="text-sm font-semibold text-slate-900">Items</h3>
+          <h3 className="text-sm font-semibold text-slate-900">Itens</h3>
         </div>
         <DataTable columns={itemColumns} rows={order.items} rowKey={(i) => i.itemId} />
         <div className="flex items-center justify-between border-t border-slate-100 px-4 py-3">

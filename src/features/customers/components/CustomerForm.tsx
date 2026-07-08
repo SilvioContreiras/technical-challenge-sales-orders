@@ -28,32 +28,32 @@ export function CustomerForm({
 
   return (
     <form id={formId} onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <Field label="Name" htmlFor="name" required error={errors.name?.message}>
+      <Field label="Nome" htmlFor="name" required error={errors.name?.message}>
         <Input id="name" invalid={Boolean(errors.name)} {...register('name')} />
       </Field>
 
       <Field
-        label="Document (CNPJ)"
+        label="Documento (CNPJ)"
         htmlFor="document"
         required
-        hint="14 digits, numbers only"
+        hint="14 dígitos, apenas números"
         error={errors.document?.message}
       >
         <Input id="document" invalid={Boolean(errors.document)} {...register('document')} />
       </Field>
 
-      <Field label="Email" htmlFor="email" required error={errors.email?.message}>
+      <Field label="E-mail" htmlFor="email" required error={errors.email?.message}>
         <Input id="email" type="email" invalid={Boolean(errors.email)} {...register('email')} />
       </Field>
 
       <Field
-        label="Authorized transport types"
+        label="Tipos de transporte autorizados"
         required
         error={errors.authorizedTransportTypeIds?.message}
       >
         <div className="flex flex-col gap-2 rounded-lg border border-slate-200 p-3">
           {transportTypes.length === 0 ? (
-            <p className="text-sm text-slate-500">No transport types available.</p>
+            <p className="text-sm text-slate-500">Nenhum tipo de transporte disponível.</p>
           ) : (
             transportTypes.map((transportType) => (
               <Checkbox
@@ -67,7 +67,7 @@ export function CustomerForm({
         </div>
       </Field>
 
-      <Checkbox label="Active" {...register('active')} />
+      <Checkbox label="Ativo" {...register('active')} />
     </form>
   );
 }

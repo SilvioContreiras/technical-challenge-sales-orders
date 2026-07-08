@@ -19,7 +19,7 @@ export const itemHandlers = [
 
   http.get(`${base}/:id`, ({ params }) => {
     const item = db.items.find((i) => i.id === params.id);
-    if (!item) return notFound('Item not found');
+    if (!item) return notFound('Item não encontrado');
     return HttpResponse.json(item);
   }),
 
@@ -28,7 +28,7 @@ export const itemHandlers = [
     const sku = body.sku.trim().toUpperCase();
 
     if (db.items.some((i) => i.sku === sku)) {
-      return unprocessable('An item with this SKU already exists', 'DUPLICATE_SKU');
+      return unprocessable('Já existe um item com este SKU', 'DUPLICATE_SKU');
     }
 
     const timestamp = now();

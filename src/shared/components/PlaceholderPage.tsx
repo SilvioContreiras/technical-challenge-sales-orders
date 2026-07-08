@@ -12,7 +12,9 @@ export function PlaceholderPage({ title, description }: PlaceholderPageProps) {
       <PageHeader title={title} description={description} />
       <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center">
         <Construction className="size-8 text-slate-400" />
-        <p className="text-sm font-medium text-slate-600">This module is coming soon.</p>
+        <p className="text-sm font-medium text-slate-600">
+          Este módulo estará disponível em breve.
+        </p>
       </div>
     </div>
   );

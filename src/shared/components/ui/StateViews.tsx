@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Loader2, AlertCircle, Inbox } from 'lucide-react';
 
-export function LoadingState({ label = 'Loading...' }: { label?: string }) {
+export function LoadingState({ label = 'Carregando...' }: { label?: string }) {
   return (
     <div className="flex flex-col items-center justify-center gap-2 py-16 text-slate-500">
       <Loader2 className="size-6 animate-spin" />

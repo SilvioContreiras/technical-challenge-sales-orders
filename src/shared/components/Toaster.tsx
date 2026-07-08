@@ -49,7 +49,7 @@ export function Toaster() {
             <p className="flex-1 text-sm">{item.message}</p>
             <button
               type="button"
-              aria-label="Dismiss notification"
+              aria-label="Dispensar notificação"
               onClick={() => dispatch(dismiss(item.id))}
               className="opacity-60 transition hover:opacity-100"
             >

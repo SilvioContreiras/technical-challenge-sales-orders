@@ -46,23 +46,25 @@ export function DashboardPage() {
   const recentOrders = (ordersQuery.data ?? []).slice(0, 5);
 
   const columns: Column<SalesOrder>[] = [
-    { header: 'Code', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
-    { header: 'Customer', cell: (o) => customerName(o.customerId) },
+    { header: 'Código', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
+    { header: 'Cliente', cell: (o) => customerName(o.customerId) },
     { header: 'Status', cell: (o) => <StatusBadge status={o.status} /> },
     { header: 'Total', align: 'right', cell: (o) => formatCurrency(calculateOrderTotal(o.items)) },
-    { header: 'Created', cell: (o) => formatDate(o.createdAt) },
+    { header: 'Criada em', cell: (o) => formatDate(o.createdAt) },
   ];
 
-  if (ordersQuery.isPending) return <LoadingState label="Loading dashboard..." />;
+  if (ordersQuery.isPending) return <LoadingState label="Carregando painel..." />;
   if (ordersQuery.isError) return <ErrorState message={getErrorMessage(ordersQuery.error)} />;
 
   return (
     <div>
-      <PageHeader title="Dashboard" description="Operational overview of sales orders." />
+      <PageHeader title="Painel" description="Visão operacional das ordens de venda." />
 
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-6">
         <Card className="p-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Total orders</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+            Total de ordens
+          </p>
           <p className="mt-1 text-2xl font-bold text-slate-900">{ordersQuery.data.length}</p>
         </Card>
         {STATUS_SEQUENCE.map((status) => (
@@ -83,10 +85,10 @@ export function DashboardPage() {
       <Card>
         <div className="flex items-center gap-2 border-b border-slate-100 px-4 py-3">
           <ClipboardList className="size-4 text-slate-400" />
-          <h3 className="text-sm font-semibold text-slate-900">Recent orders</h3>
+          <h3 className="text-sm font-semibold text-slate-900">Ordens recentes</h3>
         </div>
         {recentOrders.length === 0 ? (
-          <EmptyState message="No sales orders yet." />
+          <EmptyState message="Nenhuma ordem de venda ainda." />
         ) : (
           <DataTable
             columns={columns}

@@ -23,24 +23,24 @@ export interface NavSection {
 
 export const navSections: NavSection[] = [
   {
-    title: 'Operations',
+    title: 'Operações',
     items: [
-      { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-      { to: '/sales-orders', label: 'Sales Orders', icon: ClipboardList },
-      { to: '/scheduling', label: 'Scheduling', icon: CalendarClock },
-      { to: '/monitoring', label: 'Monitoring', icon: Activity },
+      { to: '/', label: 'Painel', icon: LayoutDashboard },
+      { to: '/sales-orders', label: 'Ordens de Venda', icon: ClipboardList },
+      { to: '/scheduling', label: 'Agendamento', icon: CalendarClock },
+      { to: '/monitoring', label: 'Monitoramento', icon: Activity },
     ],
   },
   {
-    title: 'Registries',
+    title: 'Cadastros',
     items: [
-      { to: '/customers', label: 'Customers', icon: Users },
-      { to: '/transport-types', label: 'Transport Types', icon: Truck },
-      { to: '/items', label: 'Items', icon: Package },
+      { to: '/customers', label: 'Clientes', icon: Users },
+      { to: '/transport-types', label: 'Tipos de Transporte', icon: Truck },
+      { to: '/items', label: 'Itens', icon: Package },
     ],
   },
   {
-    title: 'Governance',
-    items: [{ to: '/audit', label: 'Audit Trail', icon: History }],
+    title: 'Governança',
+    items: [{ to: '/audit', label: 'Trilha de Auditoria', icon: History }],
   },
 ];

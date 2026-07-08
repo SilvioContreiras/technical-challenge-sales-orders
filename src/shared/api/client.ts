@@ -39,8 +39,8 @@ apiClient.interceptors.response.use(
   (error: AxiosError<ApiErrorBody>) => {
     if (error.response) {
       const { status, data } = error.response;
-      throw new ApiError(status, data ?? { message: 'Unexpected error' });
+      throw new ApiError(status, data ?? { message: 'Erro inesperado' });
     }
-    throw new ApiError(0, { message: error.message || 'Network error' });
+    throw new ApiError(0, { message: error.message || 'Erro de rede' });
   },
 );

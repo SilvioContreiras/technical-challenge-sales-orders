@@ -17,6 +17,7 @@ import { formatCurrency } from '@/shared/utils/format';
 import { getErrorMessage } from '@/shared/lib/errors';
 import type { Item } from '@/shared/types';
 import { useItems, useCreateItem } from '../queries';
+import { UNIT_OF_MEASURE_LABELS } from '../labels';
 import type { ItemFormValues } from '../schema';
 import { ItemForm } from './ItemForm';
 
@@ -35,20 +36,20 @@ export function ItemsPage() {
 
   const columns: Column<Item>[] = [
     { header: 'SKU', cell: (i) => <Badge>{i.sku}</Badge> },
-    { header: 'Name', cell: (i) => <span className="font-medium text-slate-900">{i.name}</span> },
-    { header: 'Unit', cell: (i) => i.unitOfMeasure },
-    { header: 'Unit price', align: 'right', cell: (i) => formatCurrency(i.unitPrice) },
+    { header: 'Nome', cell: (i) => <span className="font-medium text-slate-900">{i.name}</span> },
+    { header: 'Unidade', cell: (i) => UNIT_OF_MEASURE_LABELS[i.unitOfMeasure] },
+    { header: 'Preço unitário', align: 'right', cell: (i) => formatCurrency(i.unitPrice) },
   ];
 
   return (
     <div>
       <PageHeader
-        title="Items"
-        description="Catalog items available to be added to sales orders."
+        title="Itens"
+        description="Itens do catálogo disponíveis para inclusão em ordens de venda."
         actions={
           <Button onClick={() => setOpen(true)}>
             <Plus className="size-4" />
-            New item
+            Novo item
           </Button>
         }
       />
@@ -58,7 +59,7 @@ export function ItemsPage() {
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
           <Input
             className="pl-9"
-            placeholder="Search by SKU or name..."
+            placeholder="Buscar por SKU ou nome..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
           />
@@ -67,11 +68,11 @@ export function ItemsPage() {
 
       <Card>
         {itemsQuery.isPending ? (
-          <LoadingState label="Loading items..." />
+          <LoadingState label="Carregando itens..." />
         ) : itemsQuery.isError ? (
           <ErrorState message={getErrorMessage(itemsQuery.error)} />
         ) : itemsQuery.data.length === 0 ? (
-          <EmptyState message="No items found." />
+          <EmptyState message="Nenhum item encontrado." />
         ) : (
           <DataTable columns={columns} rows={itemsQuery.data} rowKey={(i) => i.id} />
         )}
@@ -80,15 +81,15 @@ export function ItemsPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title="New item"
-        description="Register a new catalog item."
+        title="Novo item"
+        description="Cadastre um novo item do catálogo."
         footer={
           <>
             <Button variant="secondary" onClick={() => setOpen(false)}>
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" form={FORM_ID} loading={createItem.isPending}>
-              Create item
+              Criar item
             </Button>
           </>
         }

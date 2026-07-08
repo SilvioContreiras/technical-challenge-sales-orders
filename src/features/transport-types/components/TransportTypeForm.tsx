@@ -21,21 +21,21 @@ export function TransportTypeForm({ formId, defaultValues, onSubmit }: Transport
 
   return (
     <form id={formId} onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <Field label="Name" htmlFor="name" required error={errors.name?.message}>
+      <Field label="Nome" htmlFor="name" required error={errors.name?.message}>
         <Input id="name" invalid={Boolean(errors.name)} {...register('name')} />
       </Field>
 
       <Field
-        label="Code"
+        label="Código"
         htmlFor="code"
         required
-        hint="Unique short code, e.g. TRUCK"
+        hint="Código curto e único, ex. TRUCK"
         error={errors.code?.message}
       >
         <Input id="code" invalid={Boolean(errors.code)} {...register('code')} />
       </Field>
 
-      <Checkbox label="Active" {...register('active')} />
+      <Checkbox label="Ativo" {...register('active')} />
     </form>
   );
 }

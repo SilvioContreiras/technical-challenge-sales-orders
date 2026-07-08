@@ -24,7 +24,7 @@ export class InvalidTransitionError extends Error {
   readonly to: SalesOrderStatus;
 
   constructor(from: SalesOrderStatus, to: SalesOrderStatus) {
-    super(`Invalid status transition: ${from} -> ${to}`);
+    super(`Transição de status inválida: ${from} -> ${to}`);
     this.name = 'InvalidTransitionError';
     this.from = from;
     this.to = to;

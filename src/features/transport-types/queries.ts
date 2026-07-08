@@ -33,7 +33,7 @@ export function useCreateTransportType() {
     mutationFn: (payload: TransportTypePayload) => createTransportType(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.transportTypes.all });
-      dispatch(notify({ variant: 'success', message: 'Transport type created successfully' }));
+      dispatch(notify({ variant: 'success', message: 'Tipo de transporte criado com sucesso' }));
     },
     onError: (error) => dispatch(notify({ variant: 'error', message: getErrorMessage(error) })),
   });
@@ -50,7 +50,9 @@ export function useUpdateTransportType() {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.transportTypes.detail(transportType.id),
       });
-      dispatch(notify({ variant: 'success', message: 'Transport type updated successfully' }));
+      dispatch(
+        notify({ variant: 'success', message: 'Tipo de transporte atualizado com sucesso' }),
+      );
     },
     onError: (error) => dispatch(notify({ variant: 'error', message: getErrorMessage(error) })),
   });

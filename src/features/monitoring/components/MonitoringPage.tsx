@@ -51,22 +51,22 @@ export function MonitoringPage() {
   const hasFilters = Object.values(filters).some(Boolean);
 
   const columns: Column<SalesOrder>[] = [
-    { header: 'Code', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
-    { header: 'Customer', cell: (o) => customerName(o.customerId) },
-    { header: 'Transport', cell: (o) => transportName(o.transportTypeId) },
+    { header: 'Código', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
+    { header: 'Cliente', cell: (o) => customerName(o.customerId) },
+    { header: 'Transporte', cell: (o) => transportName(o.transportTypeId) },
     { header: 'Status', cell: (o) => <StatusBadge status={o.status} /> },
     {
-      header: 'Delivery date',
+      header: 'Data de entrega',
       cell: (o) => (o.schedule ? formatDate(o.schedule.deliveryDate) : '—'),
     },
-    { header: 'Created', cell: (o) => formatDate(o.createdAt) },
+    { header: 'Criada em', cell: (o) => formatDate(o.createdAt) },
   ];
 
   return (
     <div>
       <PageHeader
-        title="Operational Monitoring"
-        description="Filter sales orders by status, customer, transport type and date."
+        title="Monitoramento Operacional"
+        description="Filtre ordens de venda por status, cliente, tipo de transporte e data."
       />
 
       <Card className="mb-4 p-4">
@@ -81,7 +81,7 @@ export function MonitoringPage() {
                 })
               }
             >
-              <option value="">All</option>
+              <option value="">Todos</option>
               {STATUS_SEQUENCE.map((status) => (
                 <option key={status} value={status}>
                   {STATUS_LABELS[status]}
@@ -90,13 +90,13 @@ export function MonitoringPage() {
             </Select>
           </Field>
 
-          <Field label="Customer" htmlFor="filter-customer">
+          <Field label="Cliente" htmlFor="filter-customer">
             <Select
               id="filter-customer"
               value={filters.customerId ?? ''}
               onChange={(event) => update({ customerId: event.target.value || undefined })}
             >
-              <option value="">All</option>
+              <option value="">Todos</option>
               {(customersQuery.data ?? []).map((customer) => (
                 <option key={customer.id} value={customer.id}>
                   {customer.name}
@@ -105,13 +105,13 @@ export function MonitoringPage() {
             </Select>
           </Field>
 
-          <Field label="Transport" htmlFor="filter-transport">
+          <Field label="Transporte" htmlFor="filter-transport">
             <Select
               id="filter-transport"
               value={filters.transportTypeId ?? ''}
               onChange={(event) => update({ transportTypeId: event.target.value || undefined })}
             >
-              <option value="">All</option>
+              <option value="">Todos</option>
               {(transportTypesQuery.data ?? []).map((transport) => (
                 <option key={transport.id} value={transport.id}>
                   {transport.name}
@@ -120,7 +120,7 @@ export function MonitoringPage() {
             </Select>
           </Field>
 
-          <Field label="Created from" htmlFor="filter-from">
+          <Field label="Criada de" htmlFor="filter-from">
             <Input
               id="filter-from"
               type="date"
@@ -129,7 +129,7 @@ export function MonitoringPage() {
             />
           </Field>
 
-          <Field label="Created to" htmlFor="filter-to">
+          <Field label="Criada até" htmlFor="filter-to">
             <Input
               id="filter-to"
               type="date"
@@ -143,7 +143,7 @@ export function MonitoringPage() {
           <div className="mt-3">
             <Button variant="ghost" size="sm" onClick={() => setFilters(emptyFilters)}>
               <X className="size-4" />
-              Clear filters
+              Limpar filtros
             </Button>
           </div>
         ) : null}
@@ -151,11 +151,11 @@ export function MonitoringPage() {
 
       <Card>
         {ordersQuery.isPending ? (
-          <LoadingState label="Loading results..." />
+          <LoadingState label="Carregando resultados..." />
         ) : ordersQuery.isError ? (
           <ErrorState message={getErrorMessage(ordersQuery.error)} />
         ) : ordersQuery.data.length === 0 ? (
-          <EmptyState message="No orders match the selected filters." />
+          <EmptyState message="Nenhuma ordem corresponde aos filtros selecionados." />
         ) : (
           <DataTable
             columns={columns}

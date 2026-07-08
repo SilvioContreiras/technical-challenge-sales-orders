@@ -52,15 +52,15 @@ export function TransportTypesPage() {
   }
 
   const columns: Column<TransportType>[] = [
-    { header: 'Name', cell: (t) => <span className="font-medium text-slate-900">{t.name}</span> },
-    { header: 'Code', cell: (t) => <Badge>{t.code}</Badge> },
+    { header: 'Nome', cell: (t) => <span className="font-medium text-slate-900">{t.name}</span> },
+    { header: 'Código', cell: (t) => <Badge>{t.code}</Badge> },
     {
       header: 'Status',
       cell: (t) =>
         t.active ? (
-          <Badge className="bg-emerald-100 text-emerald-700">Active</Badge>
+          <Badge className="bg-emerald-100 text-emerald-700">Ativo</Badge>
         ) : (
-          <Badge className="bg-slate-100 text-slate-500">Inactive</Badge>
+          <Badge className="bg-slate-100 text-slate-500">Inativo</Badge>
         ),
     },
     {
@@ -69,7 +69,7 @@ export function TransportTypesPage() {
       cell: (t) => (
         <Button variant="ghost" size="sm" onClick={() => openEdit(t)}>
           <Pencil className="size-4" />
-          Edit
+          Editar
         </Button>
       ),
     },
@@ -78,23 +78,23 @@ export function TransportTypesPage() {
   return (
     <div>
       <PageHeader
-        title="Transport Types"
-        description="Register transport modalities available to customers."
+        title="Tipos de Transporte"
+        description="Cadastre as modalidades de transporte disponíveis aos clientes."
         actions={
           <Button onClick={openCreate}>
             <Plus className="size-4" />
-            New transport type
+            Novo tipo de transporte
           </Button>
         }
       />
 
       <Card>
         {transportTypesQuery.isPending ? (
-          <LoadingState label="Loading transport types..." />
+          <LoadingState label="Carregando tipos de transporte..." />
         ) : transportTypesQuery.isError ? (
           <ErrorState message={getErrorMessage(transportTypesQuery.error)} />
         ) : transportTypesQuery.data.length === 0 ? (
-          <EmptyState message="No transport types registered yet." />
+          <EmptyState message="Nenhum tipo de transporte cadastrado ainda." />
         ) : (
           <DataTable columns={columns} rows={transportTypesQuery.data} rowKey={(t) => t.id} />
         )}
@@ -103,14 +103,14 @@ export function TransportTypesPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title={editing ? 'Edit transport type' : 'New transport type'}
+        title={editing ? 'Editar tipo de transporte' : 'Novo tipo de transporte'}
         footer={
           <>
             <Button variant="secondary" onClick={() => setOpen(false)}>
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" form={FORM_ID} loading={isSaving}>
-              {editing ? 'Save changes' : 'Create transport type'}
+              {editing ? 'Salvar alterações' : 'Criar tipo de transporte'}
             </Button>
           </>
         }

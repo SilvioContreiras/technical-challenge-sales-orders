@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
 export const transportTypeSchema = z.object({
-  name: z.string().trim().min(2, 'Name must have at least 2 characters'),
+  name: z.string().trim().min(2, 'O nome deve ter pelo menos 2 caracteres'),
   code: z
     .string()
     .trim()
-    .min(2, 'Code must have at least 2 characters')
-    .regex(/^[A-Za-z0-9_-]+$/, 'Code may only contain letters, numbers, hyphen and underscore'),
+    .min(2, 'O código deve ter pelo menos 2 caracteres')
+    .regex(/^[A-Za-z0-9_-]+$/, 'O código pode conter apenas letras, números, hífen e sublinhado'),
   active: z.boolean(),
 });
 

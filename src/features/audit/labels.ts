@@ -1,10 +1,10 @@
 import type { AuditAction } from '@/shared/types';
 
 export const AUDIT_ACTION_LABELS: Record<AuditAction, string> = {
-  ORDER_CREATED: 'Order created',
-  STATUS_CHANGED: 'Status changed',
-  SCHEDULE_CHANGED: 'Schedule changed',
-  TRANSPORT_CHANGED: 'Transport changed',
+  ORDER_CREATED: 'Ordem criada',
+  STATUS_CHANGED: 'Status alterado',
+  SCHEDULE_CHANGED: 'Agendamento alterado',
+  TRANSPORT_CHANGED: 'Transporte alterado',
 };
 
 export const AUDIT_ACTION_BADGE_CLASSES: Record<AuditAction, string> = {

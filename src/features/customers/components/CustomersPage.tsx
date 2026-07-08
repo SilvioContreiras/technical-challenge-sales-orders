@@ -62,20 +62,20 @@ export function CustomersPage() {
   }
 
   const columns: Column<Customer>[] = [
-    { header: 'Name', cell: (c) => <span className="font-medium text-slate-900">{c.name}</span> },
-    { header: 'Document', cell: (c) => formatDocument(c.document) },
-    { header: 'Email', cell: (c) => c.email },
+    { header: 'Nome', cell: (c) => <span className="font-medium text-slate-900">{c.name}</span> },
+    { header: 'Documento', cell: (c) => formatDocument(c.document) },
+    { header: 'E-mail', cell: (c) => c.email },
     {
-      header: 'Authorized transport',
-      cell: (c) => <Badge>{c.authorizedTransportTypeIds.length} types</Badge>,
+      header: 'Transportes autorizados',
+      cell: (c) => <Badge>{c.authorizedTransportTypeIds.length} tipos</Badge>,
     },
     {
       header: 'Status',
       cell: (c) =>
         c.active ? (
-          <Badge className="bg-emerald-100 text-emerald-700">Active</Badge>
+          <Badge className="bg-emerald-100 text-emerald-700">Ativo</Badge>
         ) : (
-          <Badge className="bg-slate-100 text-slate-500">Inactive</Badge>
+          <Badge className="bg-slate-100 text-slate-500">Inativo</Badge>
         ),
     },
     {
@@ -84,7 +84,7 @@ export function CustomersPage() {
       cell: (c) => (
         <Button variant="ghost" size="sm" onClick={() => openEdit(c)}>
           <Pencil className="size-4" />
-          Edit
+          Editar
         </Button>
       ),
     },
@@ -93,28 +93,28 @@ export function CustomersPage() {
   return (
     <div>
       <PageHeader
-        title="Customers"
-        description="Manage customers and their authorized transport types."
+        title="Clientes"
+        description="Gerencie os clientes e seus tipos de transporte autorizados."
         actions={
           <Button onClick={openCreate}>
             <Plus className="size-4" />
-            New customer
+            Novo cliente
           </Button>
         }
       />
 
       <Card>
         {customersQuery.isPending ? (
-          <LoadingState label="Loading customers..." />
+          <LoadingState label="Carregando clientes..." />
         ) : customersQuery.isError ? (
           <ErrorState message={getErrorMessage(customersQuery.error)} />
         ) : customersQuery.data.length === 0 ? (
           <EmptyState
-            message="No customers registered yet."
+            message="Nenhum cliente cadastrado ainda."
             action={
               <Button onClick={openCreate}>
                 <Plus className="size-4" />
-                New customer
+                Novo cliente
               </Button>
             }
           />
@@ -126,19 +126,19 @@ export function CustomersPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title={editing ? 'Edit customer' : 'New customer'}
+        title={editing ? 'Editar cliente' : 'Novo cliente'}
         description={
           transportTypesQuery.isError
             ? getErrorMessage(transportTypesQuery.error)
-            : 'Fill in the customer details.'
+            : 'Preencha os dados do cliente.'
         }
         footer={
           <>
             <Button variant="secondary" onClick={() => setOpen(false)}>
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" form={FORM_ID} loading={isSaving}>
-              {editing ? 'Save changes' : 'Create customer'}
+              {editing ? 'Salvar alterações' : 'Criar cliente'}
             </Button>
           </>
         }

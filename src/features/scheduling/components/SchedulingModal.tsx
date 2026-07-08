@@ -62,29 +62,29 @@ export function SchedulingModal({ open, onClose, order }: SchedulingModalProps) 
     <Modal
       open={open}
       onClose={onClose}
-      title={isReschedule ? `Reschedule ${order.code}` : `Schedule ${order.code}`}
-      description="Define the delivery date and service window."
+      title={isReschedule ? `Reagendar ${order.code}` : `Agendar ${order.code}`}
+      description="Defina a data de entrega e a janela de atendimento."
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             variant="secondary"
             onClick={handleSubmit((values) => persist(values, false))}
             loading={updateSchedule.isPending && !confirmSchedule.isPending}
           >
-            Save as pending
+            Salvar como pendente
           </Button>
           <Button onClick={handleSubmit((values) => persist(values, true))} loading={isSaving}>
-            Confirm schedule
+            Confirmar agendamento
           </Button>
         </>
       }
     >
       <div className="flex flex-col gap-4">
         <Field
-          label="Delivery date"
+          label="Data de entrega"
           htmlFor="deliveryDate"
           required
           error={errors.deliveryDate?.message}
@@ -97,7 +97,7 @@ export function SchedulingModal({ open, onClose, order }: SchedulingModalProps) 
           />
         </Field>
 
-        <Field label="Service window" htmlFor="window" required>
+        <Field label="Janela de atendimento" htmlFor="window" required>
           <Select id="window" {...register('window')}>
             {SERVICE_WINDOW_VALUES.map((window) => (
               <option key={window} value={window}>

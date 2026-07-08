@@ -33,7 +33,7 @@ export function useCreateCustomer() {
     mutationFn: (payload: CustomerPayload) => createCustomer(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.customers.all });
-      dispatch(notify({ variant: 'success', message: 'Customer created successfully' }));
+      dispatch(notify({ variant: 'success', message: 'Cliente criado com sucesso' }));
     },
     onError: (error) => dispatch(notify({ variant: 'error', message: getErrorMessage(error) })),
   });
@@ -48,7 +48,7 @@ export function useUpdateCustomer() {
     onSuccess: (customer) => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.customers.all });
       void queryClient.invalidateQueries({ queryKey: queryKeys.customers.detail(customer.id) });
-      dispatch(notify({ variant: 'success', message: 'Customer updated successfully' }));
+      dispatch(notify({ variant: 'success', message: 'Cliente atualizado com sucesso' }));
     },
     onError: (error) => dispatch(notify({ variant: 'error', message: getErrorMessage(error) })),
   });

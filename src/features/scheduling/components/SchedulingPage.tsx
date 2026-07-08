@@ -41,26 +41,26 @@ export function SchedulingPage() {
   }
 
   const columns: Column<SalesOrder>[] = [
-    { header: 'Code', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
-    { header: 'Customer', cell: (o) => customerName(o.customerId) },
+    { header: 'Código', cell: (o) => <span className="font-medium text-slate-900">{o.code}</span> },
+    { header: 'Cliente', cell: (o) => customerName(o.customerId) },
     {
-      header: 'Delivery date',
+      header: 'Data de entrega',
       cell: (o) => (o.schedule ? formatDate(o.schedule.deliveryDate) : '—'),
     },
     {
-      header: 'Window',
+      header: 'Janela',
       cell: (o) => (o.schedule ? WINDOW_LABELS[o.schedule.window] : '—'),
     },
     { header: 'Status', cell: (o) => <StatusBadge status={o.status} /> },
     {
-      header: 'Schedule',
+      header: 'Agendamento',
       cell: (o) =>
         o.schedule?.confirmed ? (
-          <Badge className="bg-emerald-100 text-emerald-700">Confirmed</Badge>
+          <Badge className="bg-emerald-100 text-emerald-700">Confirmado</Badge>
         ) : o.schedule ? (
-          <Badge className="bg-amber-100 text-amber-700">Pending</Badge>
+          <Badge className="bg-amber-100 text-amber-700">Pendente</Badge>
         ) : (
-          <Badge className="bg-slate-100 text-slate-500">Not scheduled</Badge>
+          <Badge className="bg-slate-100 text-slate-500">Não agendado</Badge>
         ),
     },
     {
@@ -71,12 +71,12 @@ export function SchedulingPage() {
           {o.status === 'SCHEDULED' ? (
             <>
               <CalendarClock className="size-4" />
-              Reschedule
+              Reagendar
             </>
           ) : (
             <>
               <CalendarPlus className="size-4" />
-              Schedule
+              Agendar
             </>
           )}
         </Button>
@@ -87,17 +87,17 @@ export function SchedulingPage() {
   return (
     <div>
       <PageHeader
-        title="Scheduling Center"
-        description="Define delivery dates and service windows for planned orders."
+        title="Central de Agendamento"
+        description="Defina datas de entrega e janelas de atendimento para ordens planejadas."
       />
 
       <Card>
         {ordersQuery.isPending ? (
-          <LoadingState label="Loading orders..." />
+          <LoadingState label="Carregando ordens..." />
         ) : ordersQuery.isError ? (
           <ErrorState message={getErrorMessage(ordersQuery.error)} />
         ) : schedulable.length === 0 ? (
-          <EmptyState message="No orders awaiting scheduling. Plan an order first." />
+          <EmptyState message="Nenhuma ordem aguardando agendamento. Planeje uma ordem primeiro." />
         ) : (
           <DataTable columns={columns} rows={schedulable} rowKey={(o) => o.id} />
         )}

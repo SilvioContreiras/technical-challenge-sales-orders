@@ -19,15 +19,15 @@ describe('CustomersPage (integration)', () => {
 
     await screen.findByText('ACME Distribution');
 
-    await user.click(screen.getByRole('button', { name: /new customer/i }));
+    await user.click(screen.getByRole('button', { name: /novo cliente/i }));
 
     const dialog = await screen.findByRole('dialog');
-    await user.type(within(dialog).getByLabelText(/name/i), 'Wayne Industries');
-    await user.type(within(dialog).getByLabelText(/document/i), '11222333000144');
-    await user.type(within(dialog).getByLabelText(/email/i), 'supply@wayne.example');
-    await user.click(await within(dialog).findByLabelText(/Truck \(TRUCK\)/i));
+    await user.type(within(dialog).getByLabelText(/nome/i), 'Wayne Industries');
+    await user.type(within(dialog).getByLabelText(/documento/i), '11222333000144');
+    await user.type(within(dialog).getByLabelText(/e-mail/i), 'supply@wayne.example');
+    await user.click(await within(dialog).findByLabelText(/Caminhão \(TRUCK\)/i));
 
-    await user.click(within(dialog).getByRole('button', { name: /create customer/i }));
+    await user.click(within(dialog).getByRole('button', { name: /criar cliente/i }));
 
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(await screen.findByText('Wayne Industries')).toBeInTheDocument();
@@ -38,13 +38,13 @@ describe('CustomersPage (integration)', () => {
     renderWithProviders(<CustomersPage />);
 
     await screen.findByText('ACME Distribution');
-    await user.click(screen.getByRole('button', { name: /new customer/i }));
+    await user.click(screen.getByRole('button', { name: /novo cliente/i }));
 
     const dialog = await screen.findByRole('dialog');
-    await user.click(within(dialog).getByRole('button', { name: /create customer/i }));
+    await user.click(within(dialog).getByRole('button', { name: /criar cliente/i }));
 
     expect(
-      await within(dialog).findByText(/name must have at least 2 characters/i),
+      await within(dialog).findByText(/o nome deve ter pelo menos 2 caracteres/i),
     ).toBeInTheDocument();
     expect(screen.getByRole('dialog')).toBeInTheDocument();
   });

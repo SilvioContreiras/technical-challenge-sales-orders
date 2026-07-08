@@ -76,10 +76,10 @@ export function CreateSalesOrderPage() {
   }
 
   if (customersQuery.isPending || transportTypesQuery.isPending || itemsQuery.isPending) {
-    return <LoadingState label="Loading form data..." />;
+    return <LoadingState label="Carregando dados do formulário..." />;
   }
   if (customersQuery.isError || transportTypesQuery.isError || itemsQuery.isError) {
-    return <ErrorState message="Failed to load required data. Please try again." />;
+    return <ErrorState message="Falha ao carregar os dados necessários. Tente novamente." />;
   }
 
   return (
@@ -90,14 +90,17 @@ export function CreateSalesOrderPage() {
         className="mb-4 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
       >
         <ArrowLeft className="size-4" />
-        Back to sales orders
+        Voltar para ordens de venda
       </button>
 
-      <PageHeader title="New sales order" description="Select a customer, transport and items." />
+      <PageHeader
+        title="Nova ordem de venda"
+        description="Selecione um cliente, o transporte e os itens."
+      />
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <Card className="flex flex-col gap-4 p-5">
-          <Field label="Customer" htmlFor="customerId" required error={errors.customerId?.message}>
+          <Field label="Cliente" htmlFor="customerId" required error={errors.customerId?.message}>
             <Controller
               control={control}
               name="customerId"
@@ -111,7 +114,7 @@ export function CreateSalesOrderPage() {
                     setValue('transportTypeId', '');
                   }}
                 >
-                  <option value="">Select a customer</option>
+                  <option value="">Selecione um cliente</option>
                   {activeCustomers.map((customer) => (
                     <option key={customer.id} value={customer.id}>
                       {customer.name}
@@ -123,13 +126,13 @@ export function CreateSalesOrderPage() {
           </Field>
 
           <Field
-            label="Transport type"
+            label="Tipo de transporte"
             htmlFor="transportTypeId"
             required
             hint={
               selectedCustomerId
-                ? 'Only transport types authorized for this customer are listed.'
-                : 'Select a customer first.'
+                ? 'Apenas os tipos de transporte autorizados para este cliente são listados.'
+                : 'Selecione um cliente primeiro.'
             }
             error={errors.transportTypeId?.message}
           >
@@ -139,7 +142,7 @@ export function CreateSalesOrderPage() {
               disabled={!selectedCustomerId}
               {...register('transportTypeId')}
             >
-              <option value="">Select a transport type</option>
+              <option value="">Selecione um tipo de transporte</option>
               {availableTransports.map((transport) => (
                 <option key={transport.id} value={transport.id}>
                   {transport.name} ({transport.code})
@@ -151,7 +154,7 @@ export function CreateSalesOrderPage() {
 
         <Card className="flex flex-col gap-3 p-5">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-900">Items</h3>
+            <h3 className="text-sm font-semibold text-slate-900">Itens</h3>
             <Button
               type="button"
               variant="secondary"
@@ -159,7 +162,7 @@ export function CreateSalesOrderPage() {
               onClick={() => append({ itemId: '', quantity: 1 })}
             >
               <Plus className="size-4" />
-              Add item
+              Adicionar item
             </Button>
           </div>
 
@@ -175,7 +178,7 @@ export function CreateSalesOrderPage() {
                     invalid={Boolean(errors.items?.[index]?.itemId)}
                     {...register(`items.${index}.itemId`)}
                   >
-                    <option value="">Select an item</option>
+                    <option value="">Selecione um item</option>
                     {items.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.sku} — {item.name} ({formatCurrency(item.unitPrice)})
@@ -207,7 +210,7 @@ export function CreateSalesOrderPage() {
                   variant="ghost"
                   size="sm"
                   className="mt-1"
-                  aria-label="Remove item"
+                  aria-label="Remover item"
                   disabled={fields.length === 1}
                   onClick={() => remove(index)}
                 >
@@ -218,7 +221,7 @@ export function CreateSalesOrderPage() {
           </div>
 
           <div className="flex items-center justify-between border-t border-slate-100 pt-3">
-            <span className="text-sm text-slate-500">Estimated total</span>
+            <span className="text-sm text-slate-500">Total estimado</span>
             <span className="text-lg font-semibold text-slate-900">{formatCurrency(total)}</span>
           </div>
         </Card>
@@ -229,10 +232,10 @@ export function CreateSalesOrderPage() {
             variant="secondary"
             onClick={() => navigate({ to: '/sales-orders' })}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button type="submit" loading={createOrder.isPending}>
-            Create order
+            Criar ordem
           </Button>
         </div>
       </form>

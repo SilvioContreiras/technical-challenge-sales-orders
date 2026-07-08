@@ -1,63 +1,63 @@
-# Mocked API reference
+# Referência da API simulada
 
-All endpoints are served by MSW under the base path `/api` (configurable via
-`VITE_API_BASE_URL`). Errors follow a common shape:
+Todos os endpoints são servidos pelo MSW sob o caminho base `/api` (configurável via
+`VITE_API_BASE_URL`). Os erros seguem um formato comum:
 
 ```json
-{ "message": "human readable", "code": "MACHINE_CODE", "details": null }
+{ "message": "mensagem legível", "code": "MACHINE_CODE", "details": null }
 ```
 
-Common status codes: `200` OK, `201` Created, `404` Not found, `422` Business-rule violation.
+Códigos de status comuns: `200` OK, `201` Criado, `404` Não encontrado, `422` Violação de regra de negócio.
 
-## Customers
+## Clientes
 
-| Method | Path             | Description                  |
-| ------ | ---------------- | ---------------------------- |
-| GET    | `/customers`     | List (optional `?q=` search) |
-| GET    | `/customers/:id` | Get one                      |
-| POST   | `/customers`     | Create (unique `document`)   |
-| PUT    | `/customers/:id` | Update                       |
+| Método | Caminho          | Descrição                     |
+| ------ | ---------------- | ----------------------------- |
+| GET    | `/customers`     | Listar (busca opcional `?q=`) |
+| GET    | `/customers/:id` | Obter um                      |
+| POST   | `/customers`     | Criar (`document` único)      |
+| PUT    | `/customers/:id` | Atualizar                     |
 
-## Transport types
+## Tipos de transporte
 
-| Method | Path                   | Description            |
-| ------ | ---------------------- | ---------------------- |
-| GET    | `/transport-types`     | List                   |
-| GET    | `/transport-types/:id` | Get one                |
-| POST   | `/transport-types`     | Create (unique `code`) |
-| PUT    | `/transport-types/:id` | Update                 |
+| Método | Caminho                | Descrição            |
+| ------ | ---------------------- | -------------------- |
+| GET    | `/transport-types`     | Listar               |
+| GET    | `/transport-types/:id` | Obter um             |
+| POST   | `/transport-types`     | Criar (`code` único) |
+| PUT    | `/transport-types/:id` | Atualizar            |
 
-## Items
+## Itens
 
-| Method | Path         | Description                  |
-| ------ | ------------ | ---------------------------- |
-| GET    | `/items`     | List (optional `?q=` search) |
-| GET    | `/items/:id` | Get one                      |
-| POST   | `/items`     | Create (unique `sku`)        |
+| Método | Caminho      | Descrição                     |
+| ------ | ------------ | ----------------------------- |
+| GET    | `/items`     | Listar (busca opcional `?q=`) |
+| GET    | `/items/:id` | Obter um                      |
+| POST   | `/items`     | Criar (`sku` único)           |
 
-## Sales orders
+## Ordens de venda
 
-| Method | Path                                 | Description                                                                        |
-| ------ | ------------------------------------ | ---------------------------------------------------------------------------------- |
-| GET    | `/sales-orders`                      | List with filters: `status`, `customerId`, `transportTypeId`, `dateFrom`, `dateTo` |
-| GET    | `/sales-orders/:id`                  | Get one                                                                            |
-| POST   | `/sales-orders`                      | Create (validates customer, transport authorization, ≥1 item)                      |
-| PATCH  | `/sales-orders/:id/status`           | Advance status (validated by the state machine)                                    |
-| PUT    | `/sales-orders/:id/schedule`         | Set/update delivery date + window (unconfirmed)                                    |
-| POST   | `/sales-orders/:id/schedule/confirm` | Confirm schedule (transitions `PLANNED → SCHEDULED`)                               |
-| PUT    | `/sales-orders/:id/transport`        | Change transport (must be authorized; before dispatch)                             |
+| Método | Caminho                              | Descrição                                                                           |
+| ------ | ------------------------------------ | ----------------------------------------------------------------------------------- |
+| GET    | `/sales-orders`                      | Listar com filtros: `status`, `customerId`, `transportTypeId`, `dateFrom`, `dateTo` |
+| GET    | `/sales-orders/:id`                  | Obter uma                                                                           |
+| POST   | `/sales-orders`                      | Criar (valida cliente, autorização de transporte, ≥1 item)                          |
+| PATCH  | `/sales-orders/:id/status`           | Avançar o status (validado pela máquina de estados)                                 |
+| PUT    | `/sales-orders/:id/schedule`         | Definir/atualizar data de entrega + janela (não confirmado)                         |
+| POST   | `/sales-orders/:id/schedule/confirm` | Confirmar o agendamento (transição `PLANNED → SCHEDULED`)                           |
+| PUT    | `/sales-orders/:id/transport`        | Alterar o transporte (deve ser autorizado; antes do despacho)                       |
 
-### Relevant business-rule codes
+### Códigos relevantes de regra de negócio
 
-- `TRANSPORT_NOT_AUTHORIZED` — transport type not authorized for the customer
-- `NO_ITEMS` — order has no items
-- `INVALID_TRANSITION` — status transition not allowed by the state machine
-- `SCHEDULE_REQUIRED` — cannot reach `SCHEDULED` without a confirmed schedule
-- `TRANSPORT_LOCKED` — transport cannot change after dispatch
+- `TRANSPORT_NOT_AUTHORIZED` — tipo de transporte não autorizado para o cliente
+- `NO_ITEMS` — ordem sem itens
+- `INVALID_TRANSITION` — transição de status não permitida pela máquina de estados
+- `SCHEDULE_REQUIRED` — não é possível atingir `SCHEDULED` sem um agendamento confirmado
+- `TRANSPORT_LOCKED` — o transporte não pode ser alterado após o despacho
 
-## Audit events
+## Eventos de auditoria
 
-| Method | Path            | Description                              |
-| ------ | --------------- | ---------------------------------------- |
-| GET    | `/audit-events` | List (optional `?entityId=`, `?action=`) |
-| POST   | `/audit-events` | Record an event (used by the audit saga) |
+| Método | Caminho         | Descrição                                          |
+| ------ | --------------- | -------------------------------------------------- |
+| GET    | `/audit-events` | Listar (opcional `?entityId=`, `?action=`)         |
+| POST   | `/audit-events` | Registrar um evento (usado pela saga de auditoria) |

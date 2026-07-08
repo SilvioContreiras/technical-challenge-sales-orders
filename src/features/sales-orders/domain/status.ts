@@ -9,13 +9,13 @@ export const STATUS_SEQUENCE: readonly SalesOrderStatus[] = [
   'DELIVERED',
 ] as const;
 
-/** UI-facing labels (English) for each status. */
+/** UI-facing labels for each status. */
 export const STATUS_LABELS: Record<SalesOrderStatus, string> = {
-  CREATED: 'Created',
-  PLANNED: 'Planned',
-  SCHEDULED: 'Scheduled',
-  IN_TRANSIT: 'In transit',
-  DELIVERED: 'Delivered',
+  CREATED: 'Criada',
+  PLANNED: 'Planejada',
+  SCHEDULED: 'Agendada',
+  IN_TRANSIT: 'Em transporte',
+  DELIVERED: 'Entregue',
 };
 
 /** Tailwind badge classes per status. */

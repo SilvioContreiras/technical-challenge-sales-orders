@@ -5,6 +5,9 @@ import { notify } from '@/app/store/notificationsSlice';
 import { getErrorMessage } from '@/shared/lib/errors';
 import { recordAuditEvent } from '@/features/audit/actions';
 import type { SalesOrder, SalesOrderStatus, Schedule } from '@/shared/types';
+import { STATUS_LABELS } from './domain/status';
+import { WINDOW_LABELS } from './domain/schedule';
+import { formatDate } from '@/shared/utils/format';
 import {
   confirmSchedule,
   createSalesOrder,
@@ -19,8 +22,9 @@ import {
 } from './api';
 
 function formatSchedule(schedule: Schedule | null): string {
-  if (!schedule) return 'none';
-  return `${schedule.deliveryDate} (${schedule.window})${schedule.confirmed ? ' confirmed' : ''}`;
+  if (!schedule) return 'Nenhum';
+  const confirmed = schedule.confirmed ? ' (confirmado)' : '';
+  return `${formatDate(schedule.deliveryDate)} — ${WINDOW_LABELS[schedule.window]}${confirmed}`;
 }
 
 export function useSalesOrders(filters?: SalesOrderFilters) {
@@ -53,7 +57,7 @@ export function useCreateSalesOrder() {
     mutationFn: (payload: CreateSalesOrderPayload) => createSalesOrder(payload),
     onSuccess: (order) => {
       invalidate(order);
-      dispatch(notify({ variant: 'success', message: `Order ${order.code} created` }));
+      dispatch(notify({ variant: 'success', message: `Ordem ${order.code} criada` }));
       dispatch(
         recordAuditEvent({
           action: 'ORDER_CREATED',
@@ -81,7 +85,10 @@ export function useUpdateSalesOrderStatus() {
     onSuccess: (order, vars) => {
       invalidate(order);
       dispatch(
-        notify({ variant: 'success', message: `Order ${order.code} is now ${order.status}` }),
+        notify({
+          variant: 'success',
+          message: `Ordem ${order.code} agora está ${STATUS_LABELS[order.status]}`,
+        }),
       );
       dispatch(
         recordAuditEvent({
@@ -109,7 +116,9 @@ export function useUpdateSchedule() {
     }) => updateSchedule(vars.id, vars.payload),
     onSuccess: (order, vars) => {
       invalidate(order);
-      dispatch(notify({ variant: 'success', message: `Schedule updated for ${order.code}` }));
+      dispatch(
+        notify({ variant: 'success', message: `Agendamento atualizado para ${order.code}` }),
+      );
       dispatch(
         recordAuditEvent({
           action: 'SCHEDULE_CHANGED',
@@ -133,7 +142,9 @@ export function useConfirmSchedule() {
       confirmSchedule(vars.id),
     onSuccess: (order, vars) => {
       invalidate(order);
-      dispatch(notify({ variant: 'success', message: `Schedule confirmed for ${order.code}` }));
+      dispatch(
+        notify({ variant: 'success', message: `Agendamento confirmado para ${order.code}` }),
+      );
       const statusChanged = vars.previousStatus !== order.status;
       dispatch(
         recordAuditEvent({
@@ -141,7 +152,7 @@ export function useConfirmSchedule() {
           entity: 'SALES_ORDER',
           entityId: order.id,
           entityLabel: order.code,
-          previousState: statusChanged ? vars.previousStatus : 'pending confirmation',
+          previousState: statusChanged ? vars.previousStatus : 'Confirmação pendente',
           nextState: statusChanged ? order.status : formatSchedule(order.schedule),
         }),
       );
@@ -162,7 +173,7 @@ export function useUpdateTransport() {
     }) => updateTransport(vars.id, vars.transportTypeId),
     onSuccess: (order, vars) => {
       invalidate(order);
-      dispatch(notify({ variant: 'success', message: `Transport updated for ${order.code}` }));
+      dispatch(notify({ variant: 'success', message: `Transporte atualizado para ${order.code}` }));
       dispatch(
         recordAuditEvent({
           action: 'TRANSPORT_CHANGED',

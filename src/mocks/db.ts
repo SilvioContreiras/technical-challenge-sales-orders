@@ -14,9 +14,9 @@ const SEED_TIMESTAMP = '2026-01-05T09:00:00.000Z';
 
 function seedTransportTypes(): TransportType[] {
   return [
-    { id: 'tt-truck', name: 'Truck', code: 'TRUCK', active: true },
-    { id: 'tt-semi', name: 'Semi-trailer', code: 'SEMI', active: true },
-    { id: 'tt-bitruck', name: 'Bi-truck', code: 'BITRUCK', active: true },
+    { id: 'tt-truck', name: 'Caminhão', code: 'TRUCK', active: true },
+    { id: 'tt-semi', name: 'Carreta', code: 'SEMI', active: true },
+    { id: 'tt-bitruck', name: 'Bitruck', code: 'BITRUCK', active: true },
     { id: 'tt-van', name: 'Van', code: 'VAN', active: false },
   ].map((tt) => ({ ...tt, createdAt: SEED_TIMESTAMP, updatedAt: SEED_TIMESTAMP }));
 }
@@ -52,33 +52,45 @@ function seedCustomers(): Customer[] {
 
 function seedItems(): Item[] {
   const items: Omit<Item, 'createdAt' | 'updatedAt'>[] = [
-    { id: 'item-1', sku: 'SKU-1001', name: 'Steel bolt M8', unitOfMeasure: 'BOX', unitPrice: 24.9 },
+    {
+      id: 'item-1',
+      sku: 'SKU-1001',
+      name: 'Parafuso de aço M8',
+      unitOfMeasure: 'BOX',
+      unitPrice: 24.9,
+    },
     {
       id: 'item-2',
       sku: 'SKU-1002',
-      name: 'Aluminum sheet 2mm',
+      name: 'Chapa de alumínio 2mm',
       unitOfMeasure: 'UN',
       unitPrice: 89.5,
     },
-    { id: 'item-3', sku: 'SKU-1003', name: 'PVC pipe 100mm', unitOfMeasure: 'UN', unitPrice: 42.0 },
+    {
+      id: 'item-3',
+      sku: 'SKU-1003',
+      name: 'Cano de PVC 100mm',
+      unitOfMeasure: 'UN',
+      unitPrice: 42.0,
+    },
     {
       id: 'item-4',
       sku: 'SKU-1004',
-      name: 'Industrial lubricant',
+      name: 'Lubrificante industrial',
       unitOfMeasure: 'LITER',
       unitPrice: 18.75,
     },
     {
       id: 'item-5',
       sku: 'SKU-1005',
-      name: 'Wooden pallet',
+      name: 'Palete de madeira',
       unitOfMeasure: 'PALLET',
       unitPrice: 55.0,
     },
     {
       id: 'item-6',
       sku: 'SKU-1006',
-      name: 'Copper wire 10m',
+      name: 'Fio de cobre 10m',
       unitOfMeasure: 'UN',
       unitPrice: 33.2,
     },
@@ -96,8 +108,20 @@ function seedSalesOrders(): SalesOrder[] {
       status: 'CREATED',
       schedule: null,
       items: [
-        { itemId: 'item-1', sku: 'SKU-1001', name: 'Steel bolt M8', quantity: 10, unitPrice: 24.9 },
-        { itemId: 'item-3', sku: 'SKU-1003', name: 'PVC pipe 100mm', quantity: 4, unitPrice: 42.0 },
+        {
+          itemId: 'item-1',
+          sku: 'SKU-1001',
+          name: 'Parafuso de aço M8',
+          quantity: 10,
+          unitPrice: 24.9,
+        },
+        {
+          itemId: 'item-3',
+          sku: 'SKU-1003',
+          name: 'Cano de PVC 100mm',
+          quantity: 4,
+          unitPrice: 42.0,
+        },
       ],
       createdAt: '2026-01-06T10:00:00.000Z',
       updatedAt: '2026-01-06T10:00:00.000Z',
@@ -113,7 +137,7 @@ function seedSalesOrders(): SalesOrder[] {
         {
           itemId: 'item-2',
           sku: 'SKU-1002',
-          name: 'Aluminum sheet 2mm',
+          name: 'Chapa de alumínio 2mm',
           quantity: 20,
           unitPrice: 89.5,
         },
@@ -132,11 +156,17 @@ function seedSalesOrders(): SalesOrder[] {
         {
           itemId: 'item-4',
           sku: 'SKU-1004',
-          name: 'Industrial lubricant',
+          name: 'Lubrificante industrial',
           quantity: 50,
           unitPrice: 18.75,
         },
-        { itemId: 'item-5', sku: 'SKU-1005', name: 'Wooden pallet', quantity: 8, unitPrice: 55.0 },
+        {
+          itemId: 'item-5',
+          sku: 'SKU-1005',
+          name: 'Palete de madeira',
+          quantity: 8,
+          unitPrice: 55.0,
+        },
       ],
       createdAt: '2026-01-08T09:45:00.000Z',
       updatedAt: '2026-01-12T16:20:00.000Z',

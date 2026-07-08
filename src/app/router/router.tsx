@@ -16,7 +16,7 @@ import { LoadingState } from '@/shared/components/ui';
 const rootRoute = createRootRoute({
   component: RootLayout,
   notFoundComponent: () => (
-    <PlaceholderPage title="Page not found" description="The requested page does not exist." />
+    <PlaceholderPage title="Página não encontrada" description="A página solicitada não existe." />
   ),
 });
 

@@ -15,7 +15,7 @@ function* handleRecordAuditEvent(action: ReturnType<typeof recordAuditEvent>) {
     yield call(createAuditEvent, action.payload);
     yield call([queryClient, 'invalidateQueries'], { queryKey: queryKeys.audit.all });
   } catch {
-    yield put(notify({ variant: 'error', message: 'Failed to record audit event' }));
+    yield put(notify({ variant: 'error', message: 'Falha ao registrar evento de auditoria' }));
   }
 }
 

@@ -21,7 +21,7 @@ export function errorResponse(status: number, message: string, code?: string, de
 }
 
 /** 404 helper. */
-export function notFound(message = 'Resource not found') {
+export function notFound(message = 'Recurso não encontrado') {
   return errorResponse(404, message, 'NOT_FOUND');
 }
 

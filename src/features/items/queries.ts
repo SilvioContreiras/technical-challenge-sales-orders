@@ -27,7 +27,7 @@ export function useCreateItem() {
     mutationFn: (payload: ItemPayload) => createItem(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.items.all });
-      dispatch(notify({ variant: 'success', message: 'Item created successfully' }));
+      dispatch(notify({ variant: 'success', message: 'Item criado com sucesso' }));
     },
     onError: (error) => dispatch(notify({ variant: 'error', message: getErrorMessage(error) })),
   });
