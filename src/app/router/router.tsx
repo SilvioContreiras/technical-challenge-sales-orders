@@ -7,6 +7,7 @@ import { ItemsPage } from '@/features/items/components/ItemsPage';
 import { SalesOrdersPage } from '@/features/sales-orders/components/SalesOrdersPage';
 import { CreateSalesOrderPage } from '@/features/sales-orders/components/CreateSalesOrderPage';
 import { SalesOrderDetailPage } from '@/features/sales-orders/components/SalesOrderDetailPage';
+import { SchedulingPage } from '@/features/scheduling/components/SchedulingPage';
 
 const rootRoute = createRootRoute({
   component: RootLayout,
@@ -50,7 +51,7 @@ const salesOrderDetailRoute = createRoute({
 const schedulingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'scheduling',
-  component: () => <PlaceholderPage title="Scheduling" description="Manage delivery schedules." />,
+  component: SchedulingPage,
 });
 
 const monitoringRoute = createRoute({
