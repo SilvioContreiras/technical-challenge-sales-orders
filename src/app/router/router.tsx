@@ -4,6 +4,9 @@ import { PlaceholderPage } from '@/shared/components/PlaceholderPage';
 import { CustomersPage } from '@/features/customers/components/CustomersPage';
 import { TransportTypesPage } from '@/features/transport-types/components/TransportTypesPage';
 import { ItemsPage } from '@/features/items/components/ItemsPage';
+import { SalesOrdersPage } from '@/features/sales-orders/components/SalesOrdersPage';
+import { CreateSalesOrderPage } from '@/features/sales-orders/components/CreateSalesOrderPage';
+import { SalesOrderDetailPage } from '@/features/sales-orders/components/SalesOrderDetailPage';
 
 const rootRoute = createRootRoute({
   component: RootLayout,
@@ -29,9 +32,19 @@ const salesOrdersRoute = createRoute({
 const salesOrdersIndexRoute = createRoute({
   getParentRoute: () => salesOrdersRoute,
   path: '/',
-  component: () => (
-    <PlaceholderPage title="Sales Orders" description="Create and track sales orders." />
-  ),
+  component: SalesOrdersPage,
+});
+
+const salesOrderNewRoute = createRoute({
+  getParentRoute: () => salesOrdersRoute,
+  path: 'new',
+  component: CreateSalesOrderPage,
+});
+
+const salesOrderDetailRoute = createRoute({
+  getParentRoute: () => salesOrdersRoute,
+  path: '$orderId',
+  component: SalesOrderDetailPage,
 });
 
 const schedulingRoute = createRoute({
@@ -76,7 +89,7 @@ const auditRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   dashboardRoute,
-  salesOrdersRoute.addChildren([salesOrdersIndexRoute]),
+  salesOrdersRoute.addChildren([salesOrdersIndexRoute, salesOrderNewRoute, salesOrderDetailRoute]),
   schedulingRoute,
   monitoringRoute,
   customersRoute,
