@@ -7,7 +7,7 @@ import prettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['dist', 'coverage', 'node_modules', 'src/mocks/browser-worker.js'],
+    ignores: ['dist', 'coverage', 'node_modules', 'public/mockServiceWorker.js'],
   },
   {
     files: ['**/*.{ts,tsx}'],
