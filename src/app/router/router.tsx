@@ -8,6 +8,8 @@ import { SalesOrdersPage } from '@/features/sales-orders/components/SalesOrdersP
 import { CreateSalesOrderPage } from '@/features/sales-orders/components/CreateSalesOrderPage';
 import { SalesOrderDetailPage } from '@/features/sales-orders/components/SalesOrderDetailPage';
 import { SchedulingPage } from '@/features/scheduling/components/SchedulingPage';
+import { MonitoringPage } from '@/features/monitoring/components/MonitoringPage';
+import { DashboardPage } from '@/features/dashboard/components/DashboardPage';
 
 const rootRoute = createRootRoute({
   component: RootLayout,
@@ -19,9 +21,7 @@ const rootRoute = createRootRoute({
 const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: () => (
-    <PlaceholderPage title="Dashboard" description="Operational overview of sales orders." />
-  ),
+  component: DashboardPage,
 });
 
 const salesOrdersRoute = createRoute({
@@ -57,9 +57,7 @@ const schedulingRoute = createRoute({
 const monitoringRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'monitoring',
-  component: () => (
-    <PlaceholderPage title="Monitoring" description="Filter and monitor operations." />
-  ),
+  component: MonitoringPage,
 });
 
 const customersRoute = createRoute({
