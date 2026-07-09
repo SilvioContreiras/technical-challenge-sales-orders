@@ -16,7 +16,6 @@ import { STATUS_LABELS } from '@/features/sales-orders/domain/status';
 import { useAuditEvents } from '../queries';
 import { AUDIT_ACTION_BADGE_CLASSES, AUDIT_ACTION_LABELS } from '../labels';
 
-/** Renders an audit state, translating known status codes to their PT label. */
 function formatAuditState(value: string | null): string {
   if (!value) return '—';
   if (value in STATUS_LABELS) return STATUS_LABELS[value as SalesOrderStatus];

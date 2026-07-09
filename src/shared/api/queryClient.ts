@@ -1,9 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 
-/**
- * Factory so tests can spin up an isolated client with retries disabled while
- * the app uses a single shared instance.
- */
+/** Factory for isolated test clients (retries disabled). */
 export function createQueryClient(): QueryClient {
   return new QueryClient({
     defaultOptions: {

@@ -1,9 +1,6 @@
 import type { SalesOrderFilters } from '@/features/sales-orders/api';
 
-/**
- * Centralized React Query keys. Keeping them in one factory makes cache
- * invalidation predictable and avoids stringly-typed keys scattered around.
- */
+/** Centralized query keys for predictable cache invalidation. */
 export const queryKeys = {
   customers: {
     all: ['customers'] as const,

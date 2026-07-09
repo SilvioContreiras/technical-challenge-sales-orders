@@ -1,5 +1,4 @@
 import { setupServer } from 'msw/node';
-import { handlers } from './handlers';
+import { handlers } from './handlers/index';
 
-/** MSW server used by the test environment (Node). */
 export const server = setupServer(...handlers);

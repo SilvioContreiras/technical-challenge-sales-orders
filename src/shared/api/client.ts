@@ -1,10 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { env } from '@/app/config/env';
 
-/**
- * Shared Axios instance. All feature services build on top of this so that
- * base URL, headers and error normalization live in a single place.
- */
 export const apiClient = axios.create({
   baseURL: env.apiBaseUrl,
   headers: {
@@ -12,14 +8,12 @@ export const apiClient = axios.create({
   },
 });
 
-/** Error shape returned by the mocked API (and expected from a real backend). */
 export interface ApiErrorBody {
   message: string;
   code?: string;
   details?: unknown;
 }
 
-/** Normalized error thrown to the UI/query layer. */
 export class ApiError extends Error {
   readonly status: number;
   readonly code?: string;

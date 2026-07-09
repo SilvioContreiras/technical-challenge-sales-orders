@@ -18,7 +18,6 @@ export const ALLOWED_TRANSITIONS: Record<SalesOrderStatus, readonly SalesOrderSt
   DELIVERED: [],
 };
 
-/** Raised when an invalid status transition is attempted. */
 export class InvalidTransitionError extends Error {
   readonly from: SalesOrderStatus;
   readonly to: SalesOrderStatus;
@@ -31,24 +30,20 @@ export class InvalidTransitionError extends Error {
   }
 }
 
-/** Whether a transition from `from` to `to` is permitted. */
 export function canTransition(from: SalesOrderStatus, to: SalesOrderStatus): boolean {
   return ALLOWED_TRANSITIONS[from].includes(to);
 }
 
-/** The single next status in the linear flow, or `null` when terminal. */
 export function getNextStatus(from: SalesOrderStatus): SalesOrderStatus | null {
   return ALLOWED_TRANSITIONS[from][0] ?? null;
 }
 
-/** Throws {@link InvalidTransitionError} when the transition is not allowed. */
 export function assertTransition(from: SalesOrderStatus, to: SalesOrderStatus): void {
   if (!canTransition(from, to)) {
     throw new InvalidTransitionError(from, to);
   }
 }
 
-/** Whether the status is terminal (no further transitions possible). */
 export function isTerminal(status: SalesOrderStatus): boolean {
   return ALLOWED_TRANSITIONS[status].length === 0;
 }

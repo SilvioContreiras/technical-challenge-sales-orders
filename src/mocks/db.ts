@@ -210,7 +210,6 @@ export function seedDatabase(): Database {
   };
 }
 
-/** Mutable in-memory database used by the MSW handlers. */
 export let db: Database = seedDatabase();
 
 /** Re-seeds the database. Used to isolate test cases. */
