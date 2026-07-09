@@ -1,15 +1,5 @@
 import type { SalesOrderStatus } from '@/shared/types';
 
-/**
- * Sales order state machine.
- *
- * The lifecycle is strictly linear and forward-only:
- *   CREATED -> PLANNED -> SCHEDULED -> IN_TRANSIT -> DELIVERED
- *
- * Any transition outside this sequence is invalid and must be rejected. The
- * transition table is data-driven so the rules can evolve (e.g. adding a
- * cancellation branch) without changing consuming code.
- */
 export const ALLOWED_TRANSITIONS: Record<SalesOrderStatus, readonly SalesOrderStatus[]> = {
   CREATED: ['PLANNED'],
   PLANNED: ['SCHEDULED'],

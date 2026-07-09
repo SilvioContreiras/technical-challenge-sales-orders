@@ -1,6 +1,5 @@
 import type { SalesOrderFilters } from '@/shared/types';
 
-/** Centralized query keys for predictable cache invalidation. */
 export const queryKeys = {
   customers: {
     all: ['customers'] as const,

@@ -1,6 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
 
-/** Factory for isolated test clients (retries disabled). */
 export function createQueryClient(): QueryClient {
   return new QueryClient({
     defaultOptions: {

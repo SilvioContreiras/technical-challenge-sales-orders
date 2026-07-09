@@ -113,7 +113,6 @@ export function useUpdateSchedule() {
       id: string;
       payload: SchedulePayload;
       previousSchedule: Schedule | null;
-      /** Skips toast/audit when chained before confirmSchedule. */
       silent?: boolean;
     }) => updateSchedule(vars.id, vars.payload),
     onSuccess: (order, vars) => {

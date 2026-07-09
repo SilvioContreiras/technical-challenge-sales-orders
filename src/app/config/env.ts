@@ -1,5 +1,3 @@
-/** Swap mocked API for a real backend by changing this module and MSW bootstrap only. */
-
 const DEFAULT_API_BASE_URL = '/api';
 
 export const env = {

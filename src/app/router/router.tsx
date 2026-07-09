@@ -9,10 +9,6 @@ import { RootLayout } from '@/app/layouts/RootLayout';
 import { PlaceholderPage } from '@/shared/components/PlaceholderPage';
 import { LoadingState } from '@/shared/components/ui';
 
-/**
- * Feature pages are lazily loaded so each route ships in its own chunk, keeping
- * the initial bundle small. The shell (layout) stays eager.
- */
 const rootRoute = createRootRoute({
   component: RootLayout,
   notFoundComponent: () => (

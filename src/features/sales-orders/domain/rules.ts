@@ -4,10 +4,6 @@ export function hasAtLeastOneItem(items: readonly unknown[]): boolean {
   return items.length > 0;
 }
 
-/**
- * Business rule: a sales order can only use a transport type that is
- * explicitly authorized for the selected customer.
- */
 export function isTransportAuthorizedForCustomer(
   customer: Pick<Customer, 'authorizedTransportTypeIds'>,
   transportTypeId: Id,

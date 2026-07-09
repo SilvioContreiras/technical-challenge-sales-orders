@@ -6,7 +6,6 @@ export interface Database {
   items: Item[];
   salesOrders: SalesOrder[];
   auditEvents: AuditEvent[];
-  /** Monotonic counter backing human-friendly order codes (SO-0001, ...). */
   orderSequence: number;
 }
 
@@ -212,7 +211,6 @@ export function seedDatabase(): Database {
 
 export let db: Database = seedDatabase();
 
-/** Re-seeds the database. Used to isolate test cases. */
 export function resetDatabase(): void {
   db = seedDatabase();
 }

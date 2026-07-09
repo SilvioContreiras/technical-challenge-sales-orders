@@ -6,7 +6,6 @@ interface BrandLogoProps {
   title?: string;
 }
 
-/** OVGS mark: order sheet + forward path (lifecycle). */
 export function BrandLogo({ className, title = 'OVGS' }: BrandLogoProps) {
   const gradientId = useId();
 
