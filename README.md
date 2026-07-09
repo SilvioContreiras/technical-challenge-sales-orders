@@ -23,6 +23,27 @@ A fronteira REST é realista e pode ser trocada por uma API real alterando a con
 | Testes             | Vitest + React Testing Library                |
 | Qualidade          | ESLint, Prettier, Husky, lint-staged          |
 | Entrega            | Docker (multi-stage) + Docker Compose + nginx |
+| CI/CD              | GitHub Actions → GHCR                         |
+
+---
+
+## CI/CD
+
+Pipelines em [`.github/workflows/`](.github/workflows/):
+
+| Workflow | Quando                           | O que faz                                            |
+| -------- | -------------------------------- | ---------------------------------------------------- |
+| **CI**   | Push/PR em `main`                | `lint`, `format:check`, `typecheck`, `test`, `build` |
+| **CD**   | Após CI ok em `main` (ou manual) | Build e push da imagem Docker para o GHCR            |
+
+Imagem publicada (após o primeiro CD bem-sucedido):
+
+```bash
+docker pull ghcr.io/<owner>/technical-challenge-sales-orders:latest
+docker run --rm -p 8080:80 ghcr.io/<owner>/technical-challenge-sales-orders:latest
+```
+
+O pacote no GHCR pode ficar privado por padrão. Em **Packages → Package settings**, ajuste a visibilidade se quiser pull público.
 
 ---
 
