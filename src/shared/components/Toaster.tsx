@@ -51,7 +51,7 @@ export function Toaster() {
               type="button"
               aria-label="Dispensar notificação"
               onClick={() => dispatch(dismiss(item.id))}
-              className="opacity-60 transition hover:opacity-100"
+              className="cursor-pointer opacity-60 transition hover:opacity-100"
             >
               <X className="size-4" />
             </button>

@@ -28,7 +28,7 @@ export function RootLayout() {
                     <Link
                       to={item.to}
                       activeOptions={{ exact: item.to === '/' }}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100"
+                      className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100"
                       activeProps={{
                         className: 'bg-brand-50 text-brand-700 hover:bg-brand-50',
                       }}
