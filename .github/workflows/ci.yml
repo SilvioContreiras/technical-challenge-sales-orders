@@ -42,3 +42,21 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  # Single required check for branch protection / rulesets.
+  # Fails (and blocks PR merge) if quality failed for any reason, including tests.
+  ci-gate:
+    name: CI Gate
+    needs: quality
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Block PR when CI quality job failed
+        run: |
+          result="${{ needs.quality.result }}"
+          echo "quality job result: ${result}"
+          if [ "${result}" != "success" ]; then
+            echo "::error::CI Gate blocked: quality job did not succeed (${result}). Fix failing checks (including tests) before merging."
+            exit 1
+          fi
+          echo "CI Gate passed."
