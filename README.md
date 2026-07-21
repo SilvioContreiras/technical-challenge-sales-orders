@@ -1,46 +1,37 @@
-# OVGS — Sistema de Gestão de Ordens de Venda
+# OVGS — Sales Order Management System
 
-Uma aplicação frontend para gerenciar todo o ciclo de vida das **Ordens de Venda**:
-cadastros, criação de ordens, máquina de estados operacional, agendamento de entregas,
-monitoramento operacional e trilha de auditoria.
+A frontend application for managing the full lifecycle of **Sales Orders**:
+master data, order creation, operational state machine, delivery scheduling,
+operational monitoring, and audit trail.
 
-O backend é **simulado com MSW**, então a aplicação roda de ponta a ponta sem serviços externos.
-A fronteira REST é realista e pode ser trocada por uma API real alterando a configuração.
+The backend is **simulated with MSW**, so the application runs end to end without external services.
+The REST boundary is realistic and can be swapped for a real API by changing the configuration.
 
 ---
 
-## Stack tecnológica
+## Tech stack
 
-| Área               | Escolha                                       |
+| Area               | Choice                                        |
 | ------------------ | --------------------------------------------- |
 | UI                 | React 19 + Tailwind CSS v4                    |
 | Build              | Vite + TypeScript                             |
-| Roteamento         | TanStack Router                               |
-| Estado do servidor | TanStack Query                                |
-| Estado global      | Redux Toolkit + Redux Saga                    |
-| Formulários        | React Hook Form + Zod                         |
+| Routing            | TanStack Router                               |
+| Server state       | TanStack Query                                |
+| Global state       | Redux Toolkit + Redux Saga                    |
+| Forms              | React Hook Form + Zod                         |
 | HTTP / mocks       | Axios + MSW                                   |
-| Testes             | Vitest + React Testing Library                |
-| Qualidade          | ESLint, Prettier, Husky, lint-staged          |
-| Entrega            | Docker (multi-stage) + Docker Compose + nginx |
+| Testing            | Vitest + React Testing Library                |
+| Quality            | ESLint, Prettier, Husky, lint-staged          |
+| Delivery           | Docker (multi-stage) + Docker Compose + nginx |
 | CI/CD              | GitHub Actions → GHCR                         |
 
----
-
-## CI/CD
-
-Pipelines em [`.github/workflows/`](.github/workflows/):
-
-| Workflow | Quando                           | O que faz                                            |
-| -------- | -------------------------------- | ---------------------------------------------------- |
-| **CI**   | Push/PR em `main`                | `lint`, `format:check`, `typecheck`, `test`, `build` |
-| **CD**   | Após CI ok em `main` (ou manual) | Build e push da imagem Docker para o GHCR            |
+CI builds and tests on push/PR to `main`; CD publishes the Docker image to GHCR. See [`.github/workflows/`](.github/workflows/).
 
 ---
 
-## Como começar
+## Getting started
 
-**Requisitos:** Node.js 20+ (desenvolvido no Node 22 — veja `.nvmrc`) e npm 10+.
+**Requirements:** Node.js 20+ (developed on Node 22 — see `.nvmrc`) and npm 10+.
 
 ```bash
 nvm use
@@ -49,22 +40,10 @@ npm run dev
 # → http://localhost:5173
 ```
 
-A API simulada inicia automaticamente. Dados iniciais (clientes, transportes, itens e ordens)
-já estão disponíveis no primeiro carregamento.
+The simulated API starts automatically. Seed data (customers, transports, items, and orders)
+is available on first load.
 
-### Scripts
-
-| Script                  | Descrição                       |
-| ----------------------- | ------------------------------- |
-| `npm run dev`           | Servidor de desenvolvimento     |
-| `npm run build`         | Build de produção               |
-| `npm run preview`       | Pré-visualiza o build           |
-| `npm run lint`          | ESLint                          |
-| `npm run format`        | Prettier                        |
-| `npm run typecheck`     | Verificação de tipos (`tsc -b`) |
-| `npm run test`          | Testes                          |
-| `npm run test:watch`    | Testes em modo watch            |
-| `npm run test:coverage` | Testes com cobertura            |
+Useful scripts: `npm run build`, `npm run test`, `npm run lint`, `npm run typecheck`.
 
 ### Docker
 
@@ -73,42 +52,42 @@ docker compose up --build
 # → http://localhost:8080
 ```
 
-Requer o Docker Desktop em execução. O Compose não abre o navegador automaticamente.
+Requires Docker Desktop running.
 
 ---
 
-## Estrutura do projeto
+## Project structure
 
-Arquitetura baseada em funcionalidades: `features` e `app` dependem de `shared`.
+Feature-based architecture: `features` and `app` depend on `shared`.
 
 ```
 src/
 ├── app/          # Shell (config, layout, providers, router, store)
 ├── shared/       # API client, UI kit, types, utils
-├── features/     # Módulos (dashboard, customers, sales-orders, scheduling, ...)
-├── mocks/        # MSW: banco em memória, seed e handlers
-└── tests/        # Setup e helpers de teste
+├── features/     # Modules (dashboard, customers, sales-orders, scheduling, ...)
+├── mocks/        # MSW: in-memory database, seed, and handlers
+└── tests/        # Test setup and helpers
 ```
 
-Cada feature tipicamente expõe: `api.ts`, `queries.ts`, `schema.ts`, `domain/` e `components/`.
+Each feature typically exposes: `api.ts`, `queries.ts`, `schema.ts`, `domain/`, and `components/`.
 
-## Funcionalidades
+## Features
 
-- **Ordens de Venda** — criar, listar, detalhar; avançar status; alterar transporte
-- **Central de Agendamento** — data/janela de entrega, confirmar e reagendar
-- **Monitoramento** — filtros por status, cliente, transporte e datas
-- **Painel** — métricas por status e ordens recentes
-- **Cadastros** — clientes, tipos de transporte, itens
-- **Trilha de Auditoria** — registro cronológico das alterações relevantes
+- **Sales Orders** — create, list, detail; advance status; change transport
+- **Scheduling Hub** — delivery date/window, confirm and reschedule
+- **Monitoring** — filters by status, customer, transport, and dates
+- **Dashboard** — metrics by status and recent orders
+- **Master Data** — customers, transport types, items
+- **Audit Trail** — chronological log of relevant changes
 
-## Documentação
+## Documentation
 
-- [Arquitetura](docs/ARCHITECTURE.md) — domínio, regras, máquina de estados, decisões,
-  persistência, testes, escalabilidade, performance e trade-offs
-- [API simulada](docs/API.md) — endpoints MSW e códigos de regra de negócio
+- [Architecture](docs/ARCHITECTURE.md) — domain, rules, state machine, decisions,
+  persistence, testing, scalability, performance, and trade-offs
+- [Simulated API](docs/API.md) — MSW endpoints and business-rule codes
 
 ---
 
-## Licença
+## License
 
-Desafio técnico — não licenciado para uso em produção.
+Technical challenge — not licensed for production use.
