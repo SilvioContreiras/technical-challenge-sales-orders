@@ -89,4 +89,28 @@ describe('sales order API integration (MSW)', () => {
     const stillPlanned = await fetchSalesOrder(created.id);
     expect(stillPlanned.status).toBe('PLANNED');
   });
+
+  it('demotes SCHEDULED to PLANNED when the schedule is saved unconfirmed', async () => {
+    const created = await createSalesOrder({
+      customerId: 'cust-acme',
+      transportTypeId: 'tt-truck',
+      items: [{ itemId: 'item-1', quantity: 1 }],
+    });
+    await updateSalesOrderStatus(created.id, 'PLANNED');
+    await updateSchedule(created.id, { deliveryDate: '2026-03-01', window: 'MORNING' });
+    await confirmSchedule(created.id);
+
+    const pending = await updateSchedule(created.id, {
+      deliveryDate: '2026-03-02',
+      window: 'AFTERNOON',
+    });
+
+    expect(pending.status).toBe('PLANNED');
+    expect(pending.schedule?.confirmed).toBe(false);
+
+    await expect(updateSalesOrderStatus(created.id, 'IN_TRANSIT')).rejects.toMatchObject({
+      status: 422,
+      code: 'INVALID_TRANSITION',
+    });
+  });
 });

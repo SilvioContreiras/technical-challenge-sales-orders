@@ -68,7 +68,7 @@ export function SchedulingPage() {
       align: 'right',
       cell: (o) => (
         <Button variant="ghost" size="sm" onClick={() => openModal(o)}>
-          {o.status === 'SCHEDULED' ? (
+          {o.schedule ? (
             <>
               <CalendarClock className="size-4" />
               Reagendar

@@ -18,7 +18,7 @@ import { useTransportTypes } from '@/features/transport-types/queries';
 import { useSalesOrder, useUpdateSalesOrderStatus } from '../queries';
 import { getNextStatus } from '../domain/state-machine';
 import { STATUS_LABELS } from '../domain/status';
-import { WINDOW_LABELS } from '../domain/schedule';
+import { hasConfirmedSchedule, WINDOW_LABELS } from '../domain/schedule';
 import { calculateOrderTotal } from '../domain/rules';
 import { StatusBadge } from './StatusBadge';
 import { StatusStepper } from './StatusStepper';
@@ -54,9 +54,12 @@ export function SalesOrderDetailPage() {
   const transportType = transportTypesQuery.data?.find((t) => t.id === order.transportTypeId);
   const nextStatus = getNextStatus(order.status);
   const canChangeTransport = order.status !== 'IN_TRANSIT' && order.status !== 'DELIVERED';
+  const needsConfirmedSchedule =
+    nextStatus === 'SCHEDULED' ||
+    (nextStatus === 'IN_TRANSIT' && !hasConfirmedSchedule(order.schedule));
 
   function advanceStatus() {
-    if (!nextStatus) return;
+    if (!nextStatus || needsConfirmedSchedule) return;
     updateStatus.mutate({ id: order.id, status: nextStatus, previousStatus: order.status });
   }
 
@@ -82,10 +85,12 @@ export function SalesOrderDetailPage() {
         <div className="mt-4 flex flex-wrap items-center gap-2">
           {nextStatus === null ? (
             <span className="text-sm font-medium text-emerald-700">Esta ordem foi entregue.</span>
-          ) : nextStatus === 'SCHEDULED' ? (
+          ) : needsConfirmedSchedule ? (
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <span className="text-sm text-slate-500">
-                Agende esta ordem para avançar no fluxo.
+                {nextStatus === 'IN_TRANSIT'
+                  ? 'Confirme o agendamento antes de despachar.'
+                  : 'Agende esta ordem para avançar no fluxo.'}
               </span>
               <Button variant="secondary" onClick={() => navigate({ to: '/scheduling' })}>
                 <CalendarClock className="size-4" />

@@ -65,7 +65,7 @@ export function SchedulingModal({ open, onClose, order }: SchedulingModalProps) 
     );
   }
 
-  const isReschedule = order.status === 'SCHEDULED';
+  const isReschedule = Boolean(order.schedule);
 
   return (
     <Modal

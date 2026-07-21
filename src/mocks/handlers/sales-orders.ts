@@ -10,6 +10,10 @@ import {
   hasAtLeastOneItem,
   isTransportAuthorizedForCustomer,
 } from '@/features/sales-orders/domain/rules';
+import {
+  hasConfirmedSchedule,
+  transitionRequiresConfirmedSchedule,
+} from '@/features/sales-orders/domain/schedule';
 import { db } from '../db';
 import { notFound, now, uid, unprocessable } from '../utils';
 
@@ -124,7 +128,10 @@ export const salesOrderHandlers = [
         'INVALID_TRANSITION',
       );
     }
-    if (status === 'SCHEDULED' && !order.schedule?.confirmed) {
+    if (
+      transitionRequiresConfirmedSchedule(order.status, status) &&
+      !hasConfirmedSchedule(order.schedule)
+    ) {
       return unprocessable('A ordem requer um agendamento confirmado', 'SCHEDULE_REQUIRED');
     }
 
@@ -147,6 +154,11 @@ export const salesOrderHandlers = [
     const body = (await request.json()) as { deliveryDate: string; window: ServiceWindow };
     if (!body.deliveryDate) {
       return unprocessable('A data de entrega é obrigatória', 'DELIVERY_DATE_REQUIRED');
+    }
+
+    // Unconfirmed schedule cannot remain on SCHEDULED — demote so dispatch stays blocked.
+    if (order.status === 'SCHEDULED') {
+      order.status = 'PLANNED';
     }
 
     order.schedule = { deliveryDate: body.deliveryDate, window: body.window, confirmed: false };
